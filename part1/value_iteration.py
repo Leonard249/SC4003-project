@@ -1,6 +1,3 @@
-"""
-Value iteration algorithm for the maze.
-"""
 from typing import Dict, Tuple, List
 from maze import Maze
 
@@ -14,7 +11,7 @@ def value_iteration(maze: Maze, gamma: float = 0.99, epsilon: float = 1e-4,
         policy: dict mapping state -> optimal action
         history: list of utility values of track_state at each iteration
     """
-    # Initialize utilities to 0
+    # Init utilities to 0
     U = {s: 0.0 for s in maze.states}
     if track_state is None:
         # default to bottom-left corner if exists, else first state

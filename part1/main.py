@@ -8,19 +8,26 @@ from policy_iteration import policy_iteration
 from utils import print_grid, plot_convergence
 
 def main():
-    # Define the maze (same as Figure 17.1 in AIMA)
-    rows, cols = 3, 4
-    walls = {(1, 1)}  # row 1, col 1 (0‑based) is a wall
+    rows, cols = 6, 6
 
-    # Rewards: green +1 at (0,3), brown -1 at (1,3), white -0.05 elsewhere
+    # Walls
+    walls = {(0, 1), (1, 4), (4, 1), (4, 2), (4, 3)}
+
+    # Green squares (+1 reward)
+    green = {(0, 0), (0, 2), (0, 5), (1, 3), (2, 4), (3, 5)}
+
+    # Brown squares (-1 reward)
+    brown = {(1, 1), (1, 5), (2, 2), (3, 3), (4, 4)}
+
+    # Build rewards: green +1, brown -1, white -0.05
     rewards = {}
     for r in range(rows):
         for c in range(cols):
             if (r, c) in walls:
                 continue
-            if (r, c) == (0, 3):
+            if (r, c) in green:
                 rewards[(r, c)] = 1.0
-            elif (r, c) == (1, 3):
+            elif (r, c) in brown:
                 rewards[(r, c)] = -1.0
             else:
                 rewards[(r, c)] = -0.05

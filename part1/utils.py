@@ -52,4 +52,5 @@ def plot_convergence(history_vi: List[float], history_pi: List[float],
     plt.ylabel("Utility")
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig("results/convergence_plot.png", dpi=150)
+    print("Convergence plot saved to convergence_plot.png")
