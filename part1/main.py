@@ -1,7 +1,3 @@
-"""
-Main script for Part 1 of the assignment.
-Runs value iteration and policy iteration on the given 3x4 maze.
-"""
 from maze import Maze
 from value_iteration import *
 from policy_iteration import policy_iteration

@@ -1,11 +1,6 @@
-"""
-Maze environment for the stochastic decision problem.
-"""
 from typing import Dict, List, Tuple, Set
 
 class Maze:
-    """Represents the maze with walls, rewards, and stochastic transitions."""
-
     # Directions and their (row, col) deltas
     ACTIONS = ['N', 'S', 'E', 'W']
     DELTAS = {'N': (-1, 0), 'S': (1, 0), 'E': (0, 1), 'W': (0, -1)}
@@ -20,11 +15,6 @@ class Maze:
 
     def __init__(self, rows: int, cols: int, walls: Set[Tuple[int, int]],
                  rewards: Dict[Tuple[int, int], float]):
-        """
-        rows, cols: grid dimensions.
-        walls: set of (r,c) cells that are walls.
-        rewards: dict mapping (r,c) -> reward for non-wall cells.
-        """
         self.rows = rows
         self.cols = cols
         self.walls = walls
@@ -41,13 +31,9 @@ class Maze:
         self.state_index = {s: i for i, s in enumerate(self.states)}
 
     def is_valid(self, r: int, c: int) -> bool:
-        """Check if (r,c) is inside the grid and not a wall."""
         return 0 <= r < self.rows and 0 <= c < self.cols and (r, c) not in self.walls
 
     def next_state(self, state: Tuple[int, int], action: str) -> Tuple[int, int]:
-        """Return the state that results from attempting to move in the given action.
-        If the move would hit a wall or go out of bounds, the agent stays put.
-        """
         dr, dc = self.DELTAS[action]
         r, c = state
         nr, nc = r + dr, c + dc
@@ -56,10 +42,7 @@ class Maze:
         return state  # bump into wall/boundary
 
     def transition_probs(self, state: Tuple[int, int], action: str) -> Dict[Tuple[int, int], float]:
-        """
-        Return a dictionary mapping next_state -> probability for the given state and action.
-        The intended direction occurs with prob 0.8, each perpendicular with 0.1.
-        """
+
         probs = {}
         # intended direction
         s_intended = self.next_state(state, action)
@@ -74,6 +57,5 @@ class Maze:
 
     def expected_value(self, state: Tuple[int, int], action: str,
                        utility: Dict[Tuple[int, int], float]) -> float:
-        """Compute the expected utility of taking 'action' in 'state' given current utility dict."""
         probs = self.transition_probs(state, action)
         return sum(p * utility[s] for s, p in probs.items())
