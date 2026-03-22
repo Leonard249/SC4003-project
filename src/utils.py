@@ -1,20 +1,11 @@
-"""
-Utility functions for printing grids and plotting convergence curves.
-
-Merges:
-  • Our terminal printing (dict-based)
-  • The report's per-state convergence plots (all states on one figure)
-"""
 from typing import Dict, Tuple, List
 import matplotlib
-matplotlib.use("Agg")                       # headless backend
+matplotlib.use("Agg")                      
 import matplotlib.pyplot as plt
 from maze import Maze
 
 
-# ------------------------------------------------------------------
 # Terminal output
-# ------------------------------------------------------------------
 ARROW = {'N': '↑', 'S': '↓', 'E': '→', 'W': '←'}
 
 
@@ -45,9 +36,7 @@ def print_grid(maze: Maze,
             print(row_str)
 
 
-# ------------------------------------------------------------------
-# Convergence plots
-# ------------------------------------------------------------------
+# func to plot convergence plots
 def plot_convergence(hist_vi: List[float], hist_pi: List[float],
                      state_label: str = "tracked state",
                      filename: str = "convergence_plot.png") -> None:
@@ -69,16 +58,12 @@ def plot_convergence(hist_vi: List[float], hist_pi: List[float],
     plt.close(fig)
     print(f"  → Convergence plot saved to {filename}")
 
-
+# func to plot all states convergence
 def plot_all_states_convergence(
         maze: Maze,
         all_histories_vi: Dict[Tuple[int, int], List[float]],
         all_histories_pi: Dict[Tuple[int, int], List[float]],
         filename: str = "all_states_convergence.png") -> None:
-    """
-    Plot every state's utility curve on a single figure (report-style).
-    Two subplots: VI on the left, PI on the right.
-    """
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
 
     for s, h in all_histories_vi.items():
@@ -103,9 +88,7 @@ def plot_all_states_convergence(
     print(f"  → All-states convergence plot saved to {filename}")
 
 
-# ------------------------------------------------------------------
 # Helpers to record per-state histories
-# ------------------------------------------------------------------
 def value_iteration_all_states(maze: Maze, gamma: float = 0.99):
     """Run value iteration while recording the utility of *every* state."""
     from config import TOLERANCE

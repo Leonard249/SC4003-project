@@ -1,8 +1,3 @@
-"""
-Labyrinth maze – 10×10 grid with many walls forming narrow corridors.
-Rewards are placed at the ends of corridors; penalties guard the paths.
-Tests how maze complexity (wall density) affects convergence.
-"""
 from maze import Maze
 
 ROWS = 10

@@ -1,7 +1,3 @@
-"""
-Increased-size maze – 10×10 grid with scattered rewards and penalties.
-Tests how increasing state count affects convergence.
-"""
 from maze import Maze
 
 ROWS = 10
@@ -33,7 +29,6 @@ EMPTY_REWARD = -0.05
 
 
 def build() -> Maze:
-    """Construct and return the increased-size maze."""
     rewards = {}
     for r in range(ROWS):
         for c in range(COLS):

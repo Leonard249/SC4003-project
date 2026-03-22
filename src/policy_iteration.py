@@ -1,10 +1,3 @@
-"""
-Policy Iteration algorithm for the maze MDP.
-
-• Policy evaluation  : exact linear solve  (I − γT)U = R
-• Policy improvement : greedy over expected utilities
-• Initial policy     : random action per state (as in the report)
-"""
 import random
 import numpy as np
 from typing import Dict, Tuple, List
@@ -12,16 +5,9 @@ from maze import Maze
 from config import DISCOUNT_FACTOR
 
 
-# ------------------------------------------------------------------
-# Policy evaluation – exact linear system solve
-# ------------------------------------------------------------------
 def _policy_evaluation(maze: Maze,
                        policy: Dict[Tuple[int, int], str],
                        gamma: float) -> Dict[Tuple[int, int], float]:
-    """
-    Solve   U = R + γ T_π U   ⟹   (I − γ T_π) U = R
-    exactly with numpy.linalg.solve.  Returns state -> utility dict.
-    """
     n = len(maze.states)
     A = np.zeros((n, n))
     b = np.zeros(n)
@@ -38,9 +24,7 @@ def _policy_evaluation(maze: Maze,
     return {s: float(U_vec[i]) for i, s in enumerate(maze.states)}
 
 
-# ------------------------------------------------------------------
 # Full policy iteration loop
-# ------------------------------------------------------------------
 def policy_iteration(maze: Maze, gamma: float = DISCOUNT_FACTOR,
                      track_state: Tuple[int, int] = None):
     """
@@ -58,7 +42,7 @@ def policy_iteration(maze: Maze, gamma: float = DISCOUNT_FACTOR,
     policy  : dict  – state -> optimal action character
     history : list  – utility of *track_state* at each evaluation step
     """
-    # Random initial policy (adopted from the report)
+    # Random init policy (adopted from the report)
     policy: Dict[Tuple[int, int], str] = {
         s: random.choice(maze.ACTION_LIST) for s in maze.states
     }
@@ -70,11 +54,11 @@ def policy_iteration(maze: Maze, gamma: float = DISCOUNT_FACTOR,
     unchanged = False
 
     while not unchanged:
-        # --- Evaluation: exact solve ---
+        # eval: exact solve
         U = _policy_evaluation(maze, policy, gamma)
         history.append(U[track_state])
 
-        # --- Improvement: greedy policy update ---
+        # improvement: greedy policy update
         unchanged = True
         for s in maze.states:
             old_action = policy[s]

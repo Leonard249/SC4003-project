@@ -1,10 +1,3 @@
-"""
-Value Iteration algorithm for the maze MDP.
-
-Convergence criterion uses the AIMA textbook formula:
-    δ < ε(1 − γ) / γ
-which guarantees the resulting policy is within ε of optimal.
-"""
 from typing import Dict, Tuple, List
 from maze import Maze
 from config import DISCOUNT_FACTOR, TOLERANCE
@@ -27,7 +20,7 @@ def value_iteration(maze: Maze, gamma: float = DISCOUNT_FACTOR,
     policy  : dict  – state -> optimal action character
     history : list  – utility of *track_state* at each iteration
     """
-    # Initialise all utilities to 0
+    # Initi all utilities to 0
     U: Dict[Tuple[int, int], float] = {s: 0.0 for s in maze.states}
 
     if track_state is None:
@@ -48,7 +41,7 @@ def value_iteration(maze: Maze, gamma: float = DISCOUNT_FACTOR,
         U = U_new
         history.append(U[track_state])
 
-        # AIMA convergence check: δ < ε(1−γ)/γ
+        # convergence check: δ < ε(1−γ)/γ
         if delta < TOLERANCE:
             break
 

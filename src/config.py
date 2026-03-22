@@ -1,8 +1,3 @@
-"""
-Shared constants and configuration for the MDP maze solver.
-Adopted from the report's config-driven approach.
-"""
-
 # Discount factor (given in the assignment)
 DISCOUNT_FACTOR = 0.99
 

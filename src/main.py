@@ -6,11 +6,10 @@ Runs Value Iteration and Policy Iteration on:
   • Part 2 : three more-complex 10×10 mazes (increased-size, labyrinth, blockages)
 
 Outputs
--------
   • Terminal:  utility grids + policy grids for every maze
   • Files:     convergence plots (single-state and all-states) as .png
 """
-from maze_configs import base, increased_size, labyrinth, blockages
+from maze_configs import base, increased_size, labyrinth, mine_field
 from value_iteration import value_iteration
 from policy_iteration import policy_iteration
 from utils import (print_grid, plot_convergence,
@@ -20,7 +19,6 @@ from utils import (print_grid, plot_convergence,
 
 
 def run_maze(maze, tag: str, track_state=None):
-    """Run both algorithms on a single maze and save outputs."""
     print(f"\n{'=' * 60}")
     print(f"  {maze.name}")
     print(f"  States: {len(maze.states)}  |  Walls: {len(maze.walls)}")
@@ -30,26 +28,26 @@ def run_maze(maze, tag: str, track_state=None):
     if track_state is None:
         track_state = maze.states[0]
 
-    # ---- Value Iteration ------------------------------------------------
+    # Value iteration
     print(f"\n  [Value Iteration]")
     U_vi, pi_vi, hist_vi = value_iteration(maze, track_state=track_state)
     print(f"  Converged in {len(hist_vi)} iterations.")
     print_grid(maze, utilities=U_vi)
     print_grid(maze, policy=pi_vi)
 
-    # ---- Policy Iteration -----------------------------------------------
+    # Policy iteration
     print(f"\n  [Policy Iteration]")
     U_pi, pi_pi, hist_pi = policy_iteration(maze, track_state=track_state)
     print(f"  Converged in {len(hist_pi)} iterations.")
     print_grid(maze, utilities=U_pi)
     print_grid(maze, policy=pi_pi)
 
-    # ---- Single-state convergence plot ----------------------------------
+    # Start state convergence plot
     plot_convergence(hist_vi, hist_pi,
                      state_label=str(track_state),
                      filename=f"results/{tag}_convergence.png")
 
-    # ---- All-states convergence plot (report-style) ---------------------
+    # all states convergence plot
     _, _, all_vi = value_iteration_all_states(maze)
     _, _, all_pi = policy_iteration_all_states(maze)
     plot_all_states_convergence(maze, all_vi, all_pi,
@@ -57,26 +55,22 @@ def run_maze(maze, tag: str, track_state=None):
 
 
 def main():
-    # ================================================================
-    # Part 1 – Base 6×6 maze (from the assignment)
-    # ================================================================
+    # part 1
     base_maze = base.build()
     run_maze(base_maze, tag="part1_base", track_state=base.START)
 
-    # ================================================================
-    # Part 2 – More-complex mazes
-    # ================================================================
+    # part 2
     inc_maze = increased_size.build()
     run_maze(inc_maze, tag="part2_increased", track_state=increased_size.START)
 
     lab_maze = labyrinth.build()
     run_maze(lab_maze, tag="part2_labyrinth", track_state=labyrinth.START)
 
-    blk_maze = blockages.build()
-    run_maze(blk_maze, tag="part2_blockages", track_state=blockages.START)
+    mf_maze = mine_field.build()
+    run_maze(mf_maze, tag="part2_minefield", track_state=mine_field.START)
 
     print(f"\n{'=' * 60}")
-    print("  All done. Check the .png files for convergence plots.")
+    print("  Finished.")
     print(f"{'=' * 60}")
 
 
