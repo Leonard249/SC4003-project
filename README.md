@@ -62,40 +62,6 @@ uv run main.py
 
 ---
 
-## What the program does
-
-Running `main.py` executes both **Value Iteration** and **Policy Iteration** on four maze environments:
-
-| Maze           | Grid  | Description                               |
-| -------------- | ----- | ----------------------------------------- |
-| Base           | 6×6   | Part 1 — maze from the assignment         |
-| Increased-Size | 10×10 | Part 2 — open maze with more states       |
-| Labyrinth      | 10×10 | Part 2 — dense walls and narrow corridors |
-| Minefield      | 10×10 | Part 2 — scattered penalty traps          |
-
-For each maze, the program:
-
-- Prints the converged **utility grid** and **optimal policy grid** to the terminal
-- Saves **convergence plots** (single tracked-state and all-states) as `.png` files in the `results/` directory
-
----
-
-## Output files
-
-All plots are saved to the `results/` folder:
-
-```
-results/
-├── part1_base_convergence.png         # VI and PI convergence for the start state
-├── part1_base_all_states.png          # All-states convergence plot
-├── part2_increased_convergence.png
-├── part2_increased_all_states.png
-├── part2_labyrinth_convergence.png
-├── part2_labyrinth_all_states.png
-├── part2_minefield_convergence.png
-└── part2_minefield_all_states.png
-```
-
 > Make sure the `results/` directory exists before running. Create it with:
 >
 > ```bash
